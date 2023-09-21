@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { dashboard } from "./data";
+import { dashboard } from "../../src/components/data";
 import { Pie, Line, Bar } from "react-chartjs-2";
 import {
   ArcElement,
