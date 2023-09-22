@@ -256,7 +256,7 @@ const Home: NextPage = () => {
                     ticks: {
                       // Include a dollar sign in the ticks
                       callback: function (value, index, ticks) {
-                        return +value / 1000000 + "M VND";
+                        return +value / 100000 + "";
                       },
                     },
                   },
@@ -382,7 +382,7 @@ const Home: NextPage = () => {
           >
             <Pie
               data={{
-                labels: ["Đạt chuẩn", "Sắp hết hạn", "Sắp hết hàng"],
+                labels: ["Sử dụng tốt", "Sắp hết hạn", "Quá hạn"],
                 datasets: [
                   {
                     label: "Số lượng",

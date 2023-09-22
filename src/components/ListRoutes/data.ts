@@ -9,7 +9,7 @@ export const routes = [
   {
     id: 2,
     name: "Quản lý hóa đơn",
-    path: ROUTES.ORDER,
+    path: ROUTES.DRUG,
     icon: "/images/order.png",
   },
   {
@@ -20,13 +20,13 @@ export const routes = [
       {
         id: 3.1,
         name: "Nhập từ nhà cung cấp",
-        path: ROUTES.STORAGE,
+        path: ROUTES.DRUG,
         icon: "/images/storage.png",
       },
       {
         id: 3.2,
         name: "Nhập tồn",
-        path: ROUTES.STORAGE,
+        path: ROUTES.DRUG,
         icon: "/images/storage.png",
       },
     ],

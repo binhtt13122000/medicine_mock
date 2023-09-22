@@ -19,6 +19,7 @@ const DefaultLayout: React.FC<{
         display: "flex",
         minHeight: "100vh",
         backgroundColor: "#f8f9fc",
+        width: "100%",
       }}
     >
       <CssBaseline />
@@ -38,6 +39,8 @@ const DefaultLayout: React.FC<{
           display: "flex",
           flexDirection: "column",
           justifyContent: "start",
+          width: "100%",
+          maxWidth: "95vw"
         }}
       >
         <Toolbar />
@@ -46,6 +49,7 @@ const DefaultLayout: React.FC<{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            width: "100%",
           }}
         >
           <Box sx={{ width: "100%" }}>{children}</Box>
