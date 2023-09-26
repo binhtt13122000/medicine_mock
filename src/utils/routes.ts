@@ -10,4 +10,5 @@ export enum ROUTES {
   VOID_REASON = "/void-reason",
   LOCATION = "/location",
   TABLE = "/table",
+  UNIT = "/unit",
 }
