@@ -1,7 +1,10 @@
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
   useTheme,
@@ -11,6 +14,7 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ROUTES } from "../../utils/routes";
+import useSnackbar from "../Snackbar/useSnackbar";
 
 type IAppBarWithDrawer = {
   appbarHeight: number;
@@ -21,8 +25,18 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
   appbarHeight,
   handleDrawerToggle,
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const router = useRouter();
+  const showSnackbar = useSnackbar();
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar
@@ -79,6 +93,26 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
             alignItems: "center",
           }}
         >
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Báo cáo ngày</MenuItem>
+            <MenuItem onClick={handleClose}>Báo cáo tháng</MenuItem>
+            <MenuItem onClick={handleClose}>Báo cáo theo khoảng thời gian</MenuItem>
+
+          </Menu>
           <Typography
             component="h3"
             fontWeight="300"
@@ -89,10 +123,42 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
             marginRight="5px"
             sx={{
               display: { xs: "none", sm: "inline-block" },
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              showSnackbar({
+                children: (
+                  <Box>
+                    <Typography fontSize={16} variant="h6">
+                      Cảnh báo nhiệt độ kho
+                    </Typography>
+                    <Typography fontSize={12}>
+                      Nhiệt độ kho đang vượt quá nhiệt độ cho phép:{" "}
+                      <strong>28&deg;C</strong>
+                    </Typography>
+                    <Typography fontSize={12}>
+                      Ghi nhận vào: <strong>31/10/2021 15:00:00</strong>
+                    </Typography>
+                  </Box>
+                ),
+                severity: "error",
+              });
             }}
           >
             Quản trị viên | Binh Truong
           </Typography>
+          <Button onClick={handleMenu} color="inherit" sx={{ ml: 4 }}>
+            <Typography
+              component="h3"
+              fontWeight="300"
+              fontSize="16px"
+              whiteSpace="normal"
+              lineHeight="1.2"
+              color="#fff"
+            >
+              Tải báo cáo
+            </Typography>
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

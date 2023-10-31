@@ -528,7 +528,7 @@ const Home: NextPage = () => {
           </Paper>
         </Box>
       </Box>
-      <Typography
+      {/* <Typography
         component="h3"
         fontWeight="300"
         fontSize="18px"
@@ -703,7 +703,7 @@ const Home: NextPage = () => {
             />
           </Paper>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
