@@ -371,20 +371,46 @@ const Home: NextPage = () => {
           </Paper>
         </Box>
       </Box>
-      <Typography
-        component="h3"
-        fontWeight="300"
-        fontSize="18px"
-        whiteSpace="normal"
-        lineHeight="1.2"
-        // color="#fff"
-        marginX={2}
+      <Box
         sx={{
-          display: { xs: "none", sm: "inline-block" },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        Quản lí sức chứa của kho (m<sup>3</sup>)
-      </Typography>
+        <Box sx={{ width: "50%" }}>
+          <Typography
+            component="h3"
+            fontWeight="300"
+            fontSize="18px"
+            whiteSpace="normal"
+            lineHeight="1.2"
+            // color="#fff"
+            marginX={2}
+            sx={{
+              display: { xs: "none", sm: "inline-block" },
+            }}
+          >
+            Quản lí sức chứa của kho (m<sup>3</sup>)
+          </Typography>
+        </Box>
+        <Box width={{ width: "50%" }}>
+          <Typography
+            component="h3"
+            fontWeight="300"
+            fontSize="18px"
+            whiteSpace="normal"
+            lineHeight="1.2"
+            // color="#fff"
+            marginX={2}
+            sx={{
+              display: { xs: "none", sm: "inline-block" },
+            }}
+          >
+            Top 5 loại thuốc tồn kho
+          </Typography>
+        </Box>
+      </Box>
       <Divider
         sx={{
           marginX: 2,
@@ -501,57 +527,37 @@ const Home: NextPage = () => {
             <Bar
               // height={"30%"}
               data={{
-                labels: Array.from({ length: 12 }, (value, index) => {
-                  return `T${index + 1}`;
-                }),
+                labels: [
+                  "Amlocor",
+                  "Azibiotic",
+                  "Acetab Extra Agimexpharm",
+                  "Vastanic 10",
+                  "Neometin Genome",
+                ],
                 datasets: [
                   {
-                    label: "Nhập",
-                    data: [120, 200, 100, 20, 56, 410, 90].map(
-                      (x) => x * 1000000
-                    ),
-                    backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  },
-                  {
-                    label: "Xuất",
-                    data: [150, 150, 180, 90, 75, 64, 91].map(
-                      (x) => x * 1000000
-                    ),
-                    backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  },
-                  {
-                    label: "Tồn kho",
-                    data: [46, 265, 465, 100, 752, 451, 993].map(
-                      (x) => x * 1000000
-                    ),
-                    backgroundColor: "rgba(255, 205, 86, 0.5)",
+                    label: "Số thuốc đang tồn kho",
+                    data: [500, 400, 300, 200, 100],
+                    borderColor: "rgb(255, 99, 132)",
+                    backgroundColor: "rgb(54, 162, 235)",
                   },
                 ],
               }}
               options={{
+                indexAxis: "y" as const,
                 responsive: true,
                 plugins: {
                   legend: {
                     position: "top" as const,
                   },
-                  title: {
-                    display: true,
-                    text: "Xuất/nhập thuốc theo tháng",
-                    font: {
-                      size: 18,
-                    },
-                  },
                 },
                 scales: {
-                  y: {
+                  x: {
                     min: 0,
-                    suggestedMax: 500000000,
-                    ticks: {
-                      // Include a dollar sign in the ticks
-                      callback: function (value, index, ticks) {
-                        return +value / 100000 + "";
-                      },
-                    },
+                    max: 600,
+                  },
+                  y: {
+                    stacked: true,
                   },
                 },
               }}
