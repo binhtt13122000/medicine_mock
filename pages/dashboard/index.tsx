@@ -449,7 +449,7 @@ const Home: NextPage = () => {
                         borderDash: [8, 8],
                         label: {
                           font: {
-                            weight: "normal",
+                            weight: "50",
                           },
                           rotation: "auto",
                         },
@@ -463,7 +463,7 @@ const Home: NextPage = () => {
                         borderDash: [8, 8],
                         label: {
                           font: {
-                            weight: "normal",
+                            weight: "50",
                           },
                           rotation: "auto",
                         },
