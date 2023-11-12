@@ -4,11 +4,13 @@ import {
   Box,
   Divider,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from "@mui/material";
 import { dashboard } from "../../src/components/data";
@@ -25,6 +27,11 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePickerWrapper from "@/components/DatePickerWrapper";
+import "chartjs-plugin-annotation";
+import annotationPlugin from "chartjs-plugin-annotation";
 
 Chart.register(
   ArcElement,
@@ -35,10 +42,50 @@ Chart.register(
   LinearScale,
   PointElement,
   LineElement,
-  BarElement
+  BarElement,
+  annotationPlugin
 );
 
+// eslint-disable-next-line react/display-name
+export const CustomStartDateInput = React.forwardRef((props, ref) => {
+  return (
+    <Stack direction="row" spacing={2} alignItems="center">
+      <Typography
+        variant="subtitle2"
+        flexShrink={0}
+        width={140}
+        textAlign="right"
+      >
+        Từ ngày
+      </Typography>
+      <TextField inputRef={ref} size="small" fullWidth {...props} />
+    </Stack>
+  );
+});
+
+// eslint-disable-next-line react/display-name
+export const CustomEndDateInput = React.forwardRef((props, ref) => {
+  return (
+    <Stack direction="row" spacing={2} alignItems="center">
+      <Typography
+        variant="subtitle2"
+        flexShrink={0}
+        width={140}
+        textAlign="right"
+      >
+        Đến ngày
+      </Typography>
+      <TextField inputRef={ref} size="small" fullWidth {...props} />
+    </Stack>
+  );
+});
+
 const Home: NextPage = () => {
+  const [startDate, setStartDate] = React.useState<Date | null | undefined>(
+    null
+  );
+  const [endDate, setEndDate] = React.useState<Date | null | undefined>(null);
+
   return (
     <Box p={1}>
       <Box
@@ -130,6 +177,56 @@ const Home: NextPage = () => {
           display: { xs: "none", sm: "inline-block" },
         }}
       >
+        Lọc dữ liệu
+      </Typography>
+      <Divider
+        sx={{
+          marginX: 2,
+        }}
+      ></Divider>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          my: 2,
+        }}
+      >
+        <DatePickerWrapper>
+          <DatePicker
+            selected={startDate}
+            showYearDropdown
+            showMonthDropdown
+            id="Từ ngày"
+            placeholderText="MM-DD-YYYY"
+            customInput={<CustomStartDateInput />}
+            onChange={(date: Date) => setStartDate(startDate)}
+          />
+        </DatePickerWrapper>
+        <DatePickerWrapper>
+          <DatePicker
+            selected={endDate}
+            showYearDropdown
+            showMonthDropdown
+            id="Đến ngày"
+            placeholderText="MM-DD-YYYY"
+            customInput={<CustomEndDateInput />}
+            onChange={(date: Date) => setEndDate(endDate)}
+          />
+        </DatePickerWrapper>
+      </Box>
+      <Typography
+        component="h3"
+        fontWeight="300"
+        fontSize="18px"
+        whiteSpace="normal"
+        lineHeight="1.2"
+        // color="#fff"
+        marginX={2}
+        sx={{
+          display: { xs: "none", sm: "inline-block" },
+        }}
+      >
         Quản lí doanh số
       </Typography>
       <Divider
@@ -165,7 +262,9 @@ const Home: NextPage = () => {
                 datasets: [
                   {
                     label: "Doanh số",
-                    data: [120, 200, 100, 20, 56, 410, 90].map(x => x * 1000000),
+                    data: [120, 200, 100, 20, 56, 410, 90].map(
+                      (x) => x * 1000000
+                    ),
                     backgroundColor: "rgba(255, 99, 132, 0.5)",
                   },
                 ],
@@ -220,17 +319,211 @@ const Home: NextPage = () => {
                 datasets: [
                   {
                     label: "Nhập",
-                    data: [120, 200, 100, 20, 56, 410, 90].map(x => x * 1000000),
+                    data: [120, 200, 100, 20, 56, 410, 90].map(
+                      (x) => x * 1000000
+                    ),
                     backgroundColor: "rgba(255, 99, 132, 0.5)",
                   },
                   {
                     label: "Xuất",
-                    data: [150, 150, 180, 90, 75, 64, 91].map(x => x * 1000000),
+                    data: [150, 150, 180, 90, 75, 64, 91].map(
+                      (x) => x * 1000000
+                    ),
                     backgroundColor: "rgba(53, 162, 235, 0.5)",
                   },
                   {
                     label: "Tồn kho",
-                    data: [46, 265, 465, 100, 752, 451, 993].map(x => x * 1000000),
+                    data: [46, 265, 465, 100, 752, 451, 993].map(
+                      (x) => x * 1000000
+                    ),
+                    backgroundColor: "rgba(255, 205, 86, 0.5)",
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top" as const,
+                  },
+                  title: {
+                    display: true,
+                    text: "Xuất/nhập thuốc theo tháng",
+                    font: {
+                      size: 18,
+                    },
+                  },
+                },
+                scales: {
+                  y: {
+                    min: 0,
+                    suggestedMax: 500000000,
+                    ticks: {
+                      // Include a dollar sign in the ticks
+                      callback: function (value, index, ticks) {
+                        return +value / 100000 + "";
+                      },
+                    },
+                  },
+                },
+              }}
+            />
+          </Paper>
+        </Box>
+      </Box>
+      <Typography
+        component="h3"
+        fontWeight="300"
+        fontSize="18px"
+        whiteSpace="normal"
+        lineHeight="1.2"
+        // color="#fff"
+        marginX={2}
+        sx={{
+          display: { xs: "none", sm: "inline-block" },
+        }}
+      >
+        Quản lí sức chứa của kho (m<sup>3</sup>)
+      </Typography>
+      <Divider
+        sx={{
+          marginX: 2,
+        }}
+      ></Divider>
+      <Box
+        display="flex"
+        justifyContent="space-around"
+        flexWrap="wrap"
+        alignItems="stretch"
+        marginY={2}
+        marginX={2}
+      >
+        <Box width={"49%"} minHeight={"300px"}>
+          <Paper
+            elevation={3}
+            sx={{
+              pt: 1,
+              pb: 2,
+              px: 2,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Bar
+              // height={"30%"}
+              data={{
+                labels: Array.from({ length: 7 }, (value, index) => {
+                  let date = new Date();
+                  date.setDate(date.getDate() - (7 - (index + 1)));
+                  return `${date.getDate()}/${
+                    date.getMonth() + 1
+                  }/${date.getFullYear()}`;
+                }),
+                datasets: [
+                  {
+                    label: "12AM",
+                    data: [120, 200, 100, 20, 56, 410, 90].map((x) => x),
+                    backgroundColor: "rgba(255, 99, 132, 0.5)",
+                  },
+                  {
+                    label: "5PM",
+                    data: [100, 180, 100, 80, 220, 360, 160].map((x) => x),
+                    backgroundColor: "rgb(54, 162, 235)",
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top" as const,
+                  },
+                  annotation: {
+                    annotations: {
+                      limit: {
+                        type: "line",
+                        yMin: 450,
+                        yMax: 450,
+                        borderWidth: 3,
+                        borderColor: "yellow",
+                        borderDash: [8, 8],
+                        label: {
+                          font: {
+                            weight: "normal",
+                          },
+                          rotation: "auto",
+                        },
+                      },
+                      danger: {
+                        type: "line",
+                        yMin: 400,
+                        yMax: 400,
+                        borderWidth: 3,
+                        borderColor: "red",
+                        borderDash: [8, 8],
+                        label: {
+                          font: {
+                            weight: "normal",
+                          },
+                          rotation: "auto",
+                        },
+                      },
+                    },
+                  },
+                },
+                scales: {
+                  y: {
+                    min: 0,
+                    suggestedMax: 500,
+                    ticks: {
+                      // Include a dollar sign in the ticks
+                      callback: function (value, index, ticks) {
+                        return +value;
+                      },
+                    },
+                  },
+                },
+              }}
+            />
+          </Paper>
+        </Box>
+        <Box width={"49%"} minHeight={"300px"}>
+          <Paper
+            elevation={3}
+            sx={{
+              pt: 1,
+              pb: 2,
+              px: 2,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Bar
+              // height={"30%"}
+              data={{
+                labels: Array.from({ length: 12 }, (value, index) => {
+                  return `T${index + 1}`;
+                }),
+                datasets: [
+                  {
+                    label: "Nhập",
+                    data: [120, 200, 100, 20, 56, 410, 90].map(
+                      (x) => x * 1000000
+                    ),
+                    backgroundColor: "rgba(255, 99, 132, 0.5)",
+                  },
+                  {
+                    label: "Xuất",
+                    data: [150, 150, 180, 90, 75, 64, 91].map(
+                      (x) => x * 1000000
+                    ),
+                    backgroundColor: "rgba(53, 162, 235, 0.5)",
+                  },
+                  {
+                    label: "Tồn kho",
+                    data: [46, 265, 465, 100, 752, 451, 993].map(
+                      (x) => x * 1000000
+                    ),
                     backgroundColor: "rgba(255, 205, 86, 0.5)",
                   },
                 ],
