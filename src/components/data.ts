@@ -2,8 +2,8 @@ export const dashboard = [
     {
         id: 1,
         name: "Doanh số",
-        before: "Tháng trước: 0.00",
-        now: "Tháng này: 3,217,500.00",
+        before: "Tháng trước: 480,231,300.00",
+        now: "Tháng này: 360,512,112.00",
         color: "#BF40BF"
     },
     {
@@ -17,7 +17,7 @@ export const dashboard = [
         id: 3,
         name: "Báo cáo trong ngày",
         before: "Hóa đơn: 4 đơn (0 đơn hủy)",
-        now: "Doanh thu: 3,217,500.00",
+        now: "Doanh thu: 48,126,234.00",
         color: "#6495ED"
     },
     {

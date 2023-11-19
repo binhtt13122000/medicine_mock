@@ -279,56 +279,7 @@ const Home: NextPage = () => {
           );
         })}
       </Box>
-      <Typography
-        component="h3"
-        fontWeight="300"
-        fontSize="18px"
-        whiteSpace="normal"
-        lineHeight="1.2"
-        // color="#fff"
-        marginX={2}
-        sx={{
-          display: { xs: "none", sm: "inline-block" },
-        }}
-      >
-        Lọc dữ liệu
-      </Typography>
-      <Divider
-        sx={{
-          marginX: 2,
-        }}
-      ></Divider>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-          my: 2,
-        }}
-      >
-        <DatePickerWrapper>
-          <DatePicker
-            selected={startDate}
-            showYearDropdown
-            showMonthDropdown
-            id="Từ ngày"
-            placeholderText="MM-DD-YYYY"
-            customInput={<CustomStartDateInput />}
-            onChange={(date: Date) => setStartDate(startDate)}
-          />
-        </DatePickerWrapper>
-        <DatePickerWrapper>
-          <DatePicker
-            selected={endDate}
-            showYearDropdown
-            showMonthDropdown
-            id="Đến ngày"
-            placeholderText="MM-DD-YYYY"
-            customInput={<CustomEndDateInput />}
-            onChange={(date: Date) => setEndDate(endDate)}
-          />
-        </DatePickerWrapper>
-      </Box>
+      
       <Typography
         component="h3"
         fontWeight="300"
@@ -376,7 +327,7 @@ const Home: NextPage = () => {
                 datasets: [
                   {
                     label: "Doanh số",
-                    data: [120, 200, 100, 20, 56, 410, 90].map(
+                    data: [120, 200, 100, 20, 56, 410, 90, 360, 450, 480231300 / 1000000, 360512112/1000000].map(
                       (x) => x * 1000000
                     ),
                     backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -433,21 +384,21 @@ const Home: NextPage = () => {
                 datasets: [
                   {
                     label: "Nhập",
-                    data: [120, 200, 100, 20, 56, 410, 90].map(
+                    data: [120, 200, 100, 20, 56, 410, 90, 130, 300, 400, 220].map(
                       (x) => x * 1000000
                     ),
                     backgroundColor: "rgba(255, 99, 132, 0.5)",
                   },
                   {
                     label: "Xuất",
-                    data: [150, 150, 180, 90, 75, 64, 91].map(
+                    data: [150, 150, 180, 90, 75, 64, 91, 150, 320, 330, 200].map(
                       (x) => x * 1000000
                     ),
                     backgroundColor: "rgba(53, 162, 235, 0.5)",
                   },
                   {
                     label: "Tồn kho",
-                    data: [46, 265, 465, 100, 752, 451, 993].map(
+                    data: [46, 265, 465, 100, 752, 451, 993, 720, 640, 550, 440].map(
                       (x) => x * 1000000
                     ),
                     backgroundColor: "rgba(255, 205, 86, 0.5)",
@@ -475,7 +426,7 @@ const Home: NextPage = () => {
                     ticks: {
                       // Include a dollar sign in the ticks
                       callback: function (value, index, ticks) {
-                        return +value / 100000 + "";
+                        return +value / 100000 + "Ng. Vien";
                       },
                     },
                   },
