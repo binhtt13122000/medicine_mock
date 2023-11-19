@@ -16,8 +16,8 @@ export const warehouses = [
     actualArea: 5500,
     limitArea: 5000,
     alertArea: 4000,
-    maxTem: 8,
-    minTem: 15,
+    maxTem: 15,
+    minTem: 8,
   },
   {
     id: 3,
