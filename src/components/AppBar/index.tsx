@@ -32,7 +32,7 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
     Array<{ id: string; body: string }>
   >([]);
   const showSnackbar = useSnackbar();
-
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const router = useRouter();
