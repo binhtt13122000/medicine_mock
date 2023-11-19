@@ -19,14 +19,14 @@ export const routes = [
     children: [
       {
         id: 3.1,
-        name: "Nhập từ nhà cung cấp",
+        name: "Quản lí danh mục kho",
         path: ROUTES.STORAGE,
         icon: "/images/storage.png",
       },
       {
         id: 3.2,
-        name: "Nhập tồn",
-        path: ROUTES.DRUG,
+        name: "Quản lí danh mục thuốc",
+        path: ROUTES.PRODUCT,
         icon: "/images/storage.png",
       },
     ],

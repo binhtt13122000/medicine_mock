@@ -39,8 +39,8 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
   //     const sqs = new AWS.SQS({
   //       region: "us-east-1",
   //       credentials: {
-  //         accessKeyId: "a",
-  //         secretAccessKey: "b",
+  //         // accessKeyId: "a",
+  //         // secretAccessKey: "b",
   //       },
   //     });
 
@@ -51,42 +51,46 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
   //       .promise();
   //     const messagesData = response.Messages;
   //     if (messagesData?.length || 0 > 0) {
-  //       if (messagesData && messagesData[0].Body?.includes("Sức chứa")) {
-  //         showSnackbar({
-  //           children: (
-  //             <Box>
-  //               <Typography fontSize={16} variant="h6">
-  //                 Cảnh báo sức chứa kho
-  //               </Typography>
-  //               <Typography fontSize={12}>
-  //                 Sức chứa kho mát vượt ngưỡng 80% (4200/5000)
-  //                 <strong>28&deg;C</strong>
-  //               </Typography>
-  //               <Typography fontSize={12}>
-  //                 Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
-  //               </Typography>
-  //             </Box>
-  //           ),
-  //           severity: "warning",
-  //         });
-
-  //         showSnackbar({
-  //           children: (
-  //             <Box>
-  //               <Typography fontSize={16} variant="h6">
-  //                 Cảnh báo nhiệt độ kho
-  //               </Typography>
-  //               <Typography fontSize={12}>
-  //                 Nhiệt độ kho lạnh đang vượt quá nhiệt độ cho phép:{" "}
-  //                 <strong>10&deg;C</strong>
-  //               </Typography>
-  //               <Typography fontSize={12}>
-  //                 Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
-  //               </Typography>
-  //             </Box>
-  //           ),
-  //           severity: "error",
-  //         });
+  //       console.log(messagesData[0].Body);
+  //       console.log(messagesData[0].Body?.includes("Sức chứa"));
+  //       if (messagesData) {
+  //         if (messagesData[0].Body?.includes("Sức chứa")) {
+  //           showSnackbar({
+  //             children: (
+  //               <Box>
+  //                 <Typography fontSize={16} variant="h6">
+  //                   Cảnh báo sức chứa kho
+  //                 </Typography>
+  //                 <Typography fontSize={12}>
+  //                   Sức chứa kho mát vượt ngưỡng 
+  //                   <strong>80% (4200/5000)</strong>
+  //                 </Typography>
+  //                 <Typography fontSize={12}>
+  //                   Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
+  //                 </Typography>
+  //               </Box>
+  //             ),
+  //             severity: "warning",
+  //           });
+  //         } else {
+  //           showSnackbar({
+  //             children: (
+  //               <Box>
+  //                 <Typography fontSize={16} variant="h6">
+  //                   Cảnh báo nhiệt độ kho
+  //                 </Typography>
+  //                 <Typography fontSize={12}>
+  //                   Nhiệt độ kho lạnh đang vượt quá nhiệt độ cho phép:{" "}
+  //                   <strong>10&deg;C</strong>
+  //                 </Typography>
+  //                 <Typography fontSize={12}>
+  //                   Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
+  //                 </Typography>
+  //               </Box>
+  //             ),
+  //             severity: "error",
+  //           });
+  //         }
   //       }
   //     }
   //     if (response && messagesData && messagesData[0]) {

@@ -11,4 +11,5 @@ export enum ROUTES {
   LOCATION = "/location",
   TABLE = "/table",
   UNIT = "/unit",
+  PRODUCT = "/product"
 }
