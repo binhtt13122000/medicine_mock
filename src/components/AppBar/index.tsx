@@ -15,6 +15,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ROUTES } from "../../utils/routes";
 import useSnackbar from "../Snackbar/useSnackbar";
+import fetch from "isomorphic-unfetch";
+import AWS from "aws-sdk";
 
 type IAppBarWithDrawer = {
   appbarHeight: number;
@@ -25,10 +27,95 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
   appbarHeight,
   handleDrawerToggle,
 }) => {
+  const [isPool, setPool] = React.useState(false);
+  const [messages, setMessages] = React.useState<
+    Array<{ id: string; body: string }>
+  >([]);
+  const showSnackbar = useSnackbar();
+
+  // React.useEffect(() => {
+  //   const fetchMessages = async () => {
+  //     // Create an SNS client
+  //     const sqs = new AWS.SQS({
+  //       region: "us-east-1",
+  //       credentials: {
+  //         accessKeyId: "a",
+  //         secretAccessKey: "b",
+  //       },
+  //     });
+
+  //     const response = await sqs
+  //       .receiveMessage({
+  //         QueueUrl: "https://sqs.us-east-1.amazonaws.com/868858298824/alert",
+  //       })
+  //       .promise();
+  //     const messagesData = response.Messages;
+  //     if (messagesData?.length || 0 > 0) {
+  //       if (messagesData && messagesData[0].Body?.includes("Sức chứa")) {
+  //         showSnackbar({
+  //           children: (
+  //             <Box>
+  //               <Typography fontSize={16} variant="h6">
+  //                 Cảnh báo sức chứa kho
+  //               </Typography>
+  //               <Typography fontSize={12}>
+  //                 Sức chứa kho mát vượt ngưỡng 80% (4200/5000)
+  //                 <strong>28&deg;C</strong>
+  //               </Typography>
+  //               <Typography fontSize={12}>
+  //                 Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
+  //               </Typography>
+  //             </Box>
+  //           ),
+  //           severity: "warning",
+  //         });
+
+  //         showSnackbar({
+  //           children: (
+  //             <Box>
+  //               <Typography fontSize={16} variant="h6">
+  //                 Cảnh báo nhiệt độ kho
+  //               </Typography>
+  //               <Typography fontSize={12}>
+  //                 Nhiệt độ kho lạnh đang vượt quá nhiệt độ cho phép:{" "}
+  //                 <strong>10&deg;C</strong>
+  //               </Typography>
+  //               <Typography fontSize={12}>
+  //                 Ghi nhận vào: <strong>{new Date().toLocaleString()}</strong>
+  //               </Typography>
+  //             </Box>
+  //           ),
+  //           severity: "error",
+  //         });
+  //       }
+  //     }
+  //     if (response && messagesData && messagesData[0]) {
+  //       sqs.deleteMessage(
+  //         {
+  //           QueueUrl: "https://sqs.us-east-1.amazonaws.com/868858298824/alert",
+  //           ReceiptHandle:
+  //             (messagesData != null &&
+  //               messagesData[0] !== null &&
+  //               messagesData[0].ReceiptHandle) ||
+  //             "",
+  //         },
+  //         () => {}
+  //       );
+  //     }
+  //     setMessages(messages || []);
+  //   };
+
+  //   fetchMessages();
+
+  //   setTimeout(() => {
+  //     console.log("Reload");
+  //     setPool(!isPool);
+  //   }, 20000);
+  // }, [isPool, messages, showSnackbar]);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const theme = useTheme();
   const router = useRouter();
-  const showSnackbar = useSnackbar();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -82,7 +169,7 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
             color="#fff"
             sx={{ ml: 1 }}
           >
-            Công ty dược ABC
+            Công ty dược Thanh Bình
           </Typography>
         </Box>
         <Box
@@ -110,8 +197,9 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({
           >
             <MenuItem onClick={handleClose}>Báo cáo ngày</MenuItem>
             <MenuItem onClick={handleClose}>Báo cáo tháng</MenuItem>
-            <MenuItem onClick={handleClose}>Báo cáo theo khoảng thời gian</MenuItem>
-
+            <MenuItem onClick={handleClose}>
+              Báo cáo theo khoảng thời gian
+            </MenuItem>
           </Menu>
           <Typography
             component="h3"

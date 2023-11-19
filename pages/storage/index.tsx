@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { warehouses } from "@/data/warehouse";
 
 const Storage: NextPage = () => {
   return (
@@ -41,57 +42,43 @@ const Storage: NextPage = () => {
       <Box sx={{ height: 400, width: "100%", pt: 3 }}>
         <DataGrid
           rows={[
-            {
-              id: 1,
-              code: "001",
-              name: "Kho 1",
-              ratio: "20.000",
-              quantity: "15.000",
-              alert: "Nhiệt độ: 20C - 30C, Độ ẩm: 55%-75%",
-              status: "Hoạt động bình thường",
-            },
-            {
-              id: 2,
-              code: "002",
-              name: "Kho 2",
-              quantity: "10.000",
-              ratio: "20.000",
-              alert: "Nhiệt độ: 20C - 30C, Độ ẩm: 55%-75%",
-              status: "Hoạt động bình thường",
-            },
-            {
-              id: 3,
-              code: "003",
-              name: "Kho 3",
-              quantity: "5000",
-              ratio: "20.000",
-              alert: "Nhiệt độ: 20C - 30C, Độ ẩm: 55%-75%",
-              status: "Cảnh báo: Nhiệt độ 35C",
-            },
+            ...warehouses
+              .filter((x) => x.id !== 1)
+              .map((x, index) => {
+                return {
+                  id: index + 1,
+                  name: x.name,
+                  type: x.type,
+                  limitArea: x.limitArea,
+                  alertArea: x.alertArea,
+                  minTem: x.minTem,
+                  maxTem: x.maxTem,
+                };
+              }),
           ]}
           columns={[
             { field: "id", headerName: "ID" },
-            { field: "code", headerName: "Mã kho" },
-            { field: "name", headerName: "Tên kho" },
+            { field: "name", headerName: "Tên kho", width: 200 },
+            { field: "type", headerName: "Loại kho", width: 200 },
             {
-              field: "ratio",
-              headerName: "Sức chứa tối đa",
-              width: 200,
+              field: "limitArea",
+              headerName: "Sức chứa tối đa (m3)",
+              width: 150,
             },
             {
-              field: "quantity",
-              headerName: "Số lượng trong kho",
-              width: 200,
+              field: "alertArea",
+              headerName: "Sức chứa cảnh báo",
+              width: 150,
             },
             {
-              field: "alert",
-              headerName: "Điều kiện an toàn",
-              width: 350,
+              field: "minTem",
+              headerName: "Nhiệt độ thấp nhất",
+              width: 150,
             },
             {
-              field: "status",
-              headerName: "Tình trạng",
-              width: 350,
+              field: "maxTem",
+              headerName: "Nhiệt độ cao nhất",
+              width: 150,
             },
           ]}
           initialState={{
